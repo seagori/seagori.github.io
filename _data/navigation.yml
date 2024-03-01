@@ -10,7 +10,21 @@ main:
   #   url: /collection-archive/
   # - title: "Sitemap"
   #   url: /sitemap/
+  - title: "TWIG"
+    url: /c/twig.html
+  - title: "POTW"
+    url: /c/potw.html
   - title: "Categories"
-    url: /categories/
+    children:
+      - title: "Chemistry"
+        url: /c/chem.html
+      - title: "Mathematics"
+        url: /c/math.html
+      - title: "Physics"
+        url: /c/phys.html
+      - title: "Computer Science"
+        url: /c/cs.html
+      - title: ...
+        url: /categories/
   - title: "Tags"
     url: /tags/

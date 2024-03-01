@@ -4,7 +4,10 @@ layout: archive
 
 {{ content }}
 
-{% assign entries_layout = page.entries_layout | default: 'list' %}
-<div class="entries-{{ entries_layout }}">
-  {% include posts-category.html taxonomy=page.taxonomy type=entries_layout %}
-</div>
+<ul>
+  {% for post in site.categories[page.title] %}
+    {% if post.url %}
+        {% include archive-single.html type=entries_layout %}
+    {% endif %}
+  {% endfor %}
+</ul>

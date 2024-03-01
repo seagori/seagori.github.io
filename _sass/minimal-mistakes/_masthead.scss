@@ -91,3 +91,21 @@
     font-weight: 700;
   }
 }
+
+.masthead__menu-item ul{
+  background-color: transparent;
+  display:block;
+  height:auto;
+  position:relative;
+  z-index:10;
+  
+  @include breakpoint($small) {
+    background-color: #d1d1d14c;
+    display:none;
+    position:absolute;
+  }
+}
+
+.masthead__menu-item:hover ul{
+  display:block;
+}

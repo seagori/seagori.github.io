@@ -1,8 +1,10 @@
 ---
 title:  "TEST DRAFT"
 layout: single
-category: "Chemistry"
-tags: ["draft"]
+categories: ["Unclassified"]
+date: 2024-01-01
+last_modified_at: 2024-12-31
+tags: ["Draft","English","한국어"]
 ---
 
 This is a draft.
