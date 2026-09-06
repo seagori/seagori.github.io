@@ -1,4 +1,416 @@
----
-layout: home
-author_profile: true
----
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="description" content="SEAGORI - Personal Portal & Hub">
+  <meta name="theme-color" content="#fcf8e8">
+  <title>SEAGORI</title>
+
+  <style>
+    /* -------------------------------------------------------------
+       Inspired by Zed's "Paper - Contrast"
+       ------------------------------------------------------------- */
+    :root {
+      --bg-color: #fcf8e8;
+      --card-bg: #ffffff;
+      --card-hover-bg: #fdfcf7;
+      --border-color: #e5e0cf;
+      --border-hover: #0fbda8;
+      --text-main: #3e3d39;
+      --text-muted: #676664;
+      --text-sub: #898883;
+      --accent: #007aa3;
+      --accent-teal: #0fbda8;
+      --icon-bg: #f6f1e2;
+      --tag-bg: #f2ede0;
+      --radius: 14px;
+      --shadow-sm: 0 1px 2px rgba(62, 61, 57, 0.04);
+      --shadow-hover: 0 6px 16px rgba(62, 61, 57, 0.08);
+      --transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans KR", system-ui, sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      padding: 3.5rem 1.25rem 2rem;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Subtle parchment depth */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(circle 700px at 50% 15%, rgba(255, 255, 255, 0.5), transparent 75%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* -------------------------------------------------------------
+       Layout Container
+       ------------------------------------------------------------- */
+    .container {
+      width: 100%;
+      max-width: 960px;
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    /* -------------------------------------------------------------
+       Header Section
+       ------------------------------------------------------------- */
+    header {
+      text-align: center;
+      margin-bottom: 2.75rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    h1 {
+      font-size: 1.75rem;
+      font-weight: 700;
+      letter-spacing: -0.025em;
+      color: var(--text-main);
+      margin-bottom: 0.45rem;
+    }
+
+    .bio {
+      font-size: 0.925rem;
+      color: var(--text-muted);
+      max-width: 440px;
+      line-height: 1.5;
+      text-wrap: balance;
+    }
+
+    /* -------------------------------------------------------------
+       Modern Responsive Grid
+       ------------------------------------------------------------- */
+    .grid-container {
+      width: 100%;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.125rem;
+    }
+
+    /* -------------------------------------------------------------
+       Link Card Style
+       ------------------------------------------------------------- */
+    .card {
+      position: relative;
+      background-color: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius);
+      padding: 1.35rem 1.45rem;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 145px;
+      box-shadow: var(--shadow-sm);
+      transition: var(--transition);
+      outline: none;
+    }
+
+    .card:hover {
+      background-color: var(--card-hover-bg);
+      border-color: var(--border-hover);
+      box-shadow: var(--shadow-hover);
+      transform: translateY(-2px);
+    }
+
+    .card:focus-visible {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 2px rgba(15, 189, 168, 0.3);
+    }
+
+    .card-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1.1rem;
+    }
+
+    .icon-box {
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: var(--icon-bg);
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      transition: color 0.15s ease, background-color 0.15s ease;
+    }
+
+    .icon-box svg {
+      width: 20px;
+      height: 20px;
+      display: block;
+    }
+
+    .card:hover .icon-box {
+      color: var(--accent);
+      background-color: rgba(15, 189, 168, 0.08);
+      border-color: rgba(15, 189, 168, 0.25);
+    }
+
+    .card-tag {
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      padding: 0.2rem 0.55rem;
+      border-radius: 6px;
+      background-color: var(--tag-bg);
+      color: var(--text-muted);
+      border: 1px solid var(--border-color);
+      transition: color 0.15s ease;
+    }
+
+    /* Individual Card Accents */
+    .card-blog .card-tag {
+      color: #007aa3;
+      background-color: rgba(0, 122, 163, 0.08);
+      border-color: rgba(0, 122, 163, 0.16);
+    }
+    .card-github .card-tag {
+      color: #2059cb;
+      background-color: rgba(32, 89, 203, 0.08);
+      border-color: rgba(32, 89, 203, 0.16);
+    }
+    .card-bsky .card-tag {
+      color: #0fbda8;
+      background-color: rgba(15, 189, 168, 0.1);
+      border-color: rgba(15, 189, 168, 0.2);
+    }
+
+    .card-body h2 {
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      margin-bottom: 0.35rem;
+      transition: color 0.15s ease;
+    }
+
+    .card:hover .card-body h2 {
+      color: var(--accent);
+    }
+
+    .arrow-icon {
+      width: 14px;
+      height: 14px;
+      color: var(--text-sub);
+      transition: transform 0.2s ease, color 0.15s ease;
+    }
+
+    .card:hover .arrow-icon {
+      transform: translate(2px, -2px);
+      color: var(--accent);
+    }
+
+    .card-body p {
+      font-size: 0.825rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+      margin-bottom: 0.85rem;
+    }
+
+    .card-domain {
+      font-size: 0.75rem;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      color: var(--text-sub);
+    }
+
+    /* -------------------------------------------------------------
+       Footer
+       ------------------------------------------------------------- */
+    footer {
+      margin-top: 3.5rem;
+      text-align: center;
+      font-size: 0.75rem;
+      color: var(--text-sub);
+      position: relative;
+      z-index: 1;
+    }
+
+    /* -------------------------------------------------------------
+       Mobile Adjustments
+       ------------------------------------------------------------- */
+    @media (max-width: 640px) {
+      body {
+        padding: 2.5rem 1rem 1.5rem;
+      }
+      header {
+        margin-bottom: 2rem;
+      }
+      h1 {
+        font-size: 1.5rem;
+      }
+      .grid-container {
+        grid-template-columns: 1fr;
+        gap: 0.875rem;
+      }
+      .card {
+        min-height: auto;
+        padding: 1.15rem 1.2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <!-- Header -->
+    <header>
+      <h1>SEAGORI</h1>
+      <p class="bio"> </p>
+    </header>
+
+    <!-- Main Grid Section -->
+    <main class="grid-container">
+
+      <!-- ========================================================= -->
+      <!-- [CARD 1: BLOG] nest.seagori.com -->
+      <!-- ========================================================= -->
+      <a href="https://nest.seagori.com" target="_blank" rel="noopener noreferrer" class="card card-blog">
+        <div class="card-top">
+          <div class="icon-box" aria-hidden="true">
+            <!-- Nest Seagull & Wave Emblem SVG (as in image) -->
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="9.6"/>
+              <!-- Seagull -->
+              <path d="M6.8 9.2 C9.5 7.8 12.8 8.8 14.5 11.8"/>
+              <path d="M14.5 11.8 L12.6 14.1"/>
+              <path d="M14.5 11.8 C16.2 10.5 17.8 10.5 19.3 11.5"/>
+              <!-- Wave -->
+              <path d="M5.2 16.5 C7.8 14.2 10.5 14.5 13.5 16.8 C15.5 18.2 17.2 18 19 16.5"/>
+            </svg>
+          </div>
+          <span class="card-tag">Blog</span>
+        </div>
+        <div class="card-body">
+          <h2>
+            Nest
+            <svg class="arrow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="7" y1="17" x2="17" y2="7"></line>
+              <polyline points="7 7 17 7 17 17"></polyline>
+            </svg>
+          </h2>
+          <p>잡다한 생각을 모아둔 블로그입니다.</p>
+          <div class="card-domain">nest.seagori.com</div>
+        </div>
+      </a>
+
+      <!-- ========================================================= -->
+      <!-- [CARD 2: GITHUB] github.com/seagori -->
+      <!-- ========================================================= -->
+      <a href="https://github.com/seagori" target="_blank" rel="noopener noreferrer" class="card card-github">
+        <div class="card-top">
+          <div class="icon-box" aria-hidden="true">
+            <!-- Official GitHub Octocat SVG Icon -->
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+            </svg>
+          </div>
+          <span class="card-tag">Code</span>
+        </div>
+        <div class="card-body">
+          <h2>
+            GitHub
+            <svg class="arrow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="7" y1="17" x2="17" y2="7"></line>
+              <polyline points="7 7 17 7 17 17"></polyline>
+            </svg>
+          </h2>
+          <p>오픈소스 프로젝트와 코드 저장소입니다.</p>
+          <div class="card-domain">github.com/seagori</div>
+        </div>
+      </a>
+
+      <!-- ========================================================= -->
+      <!-- [CARD 3: BLUESKY] bsky.app/profile/seagori.bsky.social -->
+      <!-- ========================================================= -->
+      <a href="https://bsky.app/profile/seagori.bsky.social" target="_blank" rel="noopener noreferrer" class="card card-bsky">
+        <div class="card-top">
+          <div class="icon-box" aria-hidden="true">
+            <!-- Official Bluesky Butterfly SVG Icon (Complete with lower wings) -->
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M5.202 2.857C7.954 4.922 10.913 9.11 12 11.358c1.087-2.247 4.046-6.436 6.798-8.501C20.783 1.366 24 .213 24 3.883c0 .732-.42 6.156-.667 7.037-.856 3.061-3.978 3.842-6.755 3.37 4.854.826 6.089 3.562 3.422 6.299-5.065 5.196-7.28-1.304-7.847-2.97-.104-.305-.152-.448-.153-.327 0-.121-.05.022-.153.327-.568 1.666-2.782 8.166-7.847 2.97-2.667-2.737-1.432-5.473 3.422-6.3-2.777.473-5.899-.308-6.755-3.369C.42 10.04 0 4.615 0 3.883c0-3.67 3.217-2.517 5.202-1.026"/>
+            </svg>
+          </div>
+          <span class="card-tag">Social</span>
+        </div>
+        <div class="card-body">
+          <h2>
+            Bluesky
+            <svg class="arrow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="7" y1="17" x2="17" y2="7"></line>
+              <polyline points="7 7 17 7 17 17"></polyline>
+            </svg>
+          </h2>
+          <p>일상과 생각을 공유하는 소셜 피드입니다.</p>
+          <div class="card-domain">@seagori.bsky.social</div>
+        </div>
+      </a>
+
+      <!-- ========================================================= -->
+      <!-- [새로운 카드 추가 가이드]  -->
+      <!--
+      <a href="https://example.com" target="_blank" rel="noopener noreferrer" class="card">
+        <div class="card-top">
+          <div class="icon-box" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="2" y1="12" x2="22" y2="12"></line>
+              <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+            </svg>
+          </div>
+          <span class="card-tag">Project</span>
+        </div>
+        <div class="card-body">
+          <h2>
+            새 웹사이트 이름
+            <svg class="arrow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="7" y1="17" x2="17" y2="7"></line>
+              <polyline points="7 7 17 7 17 17"></polyline>
+            </svg>
+          </h2>
+          <p>웹사이트에 대한 간단한 설명을 입력하세요.</p>
+          <div class="card-domain">example.com</div>
+        </div>
+      </a>
+      -->
+      <!-- ========================================================= -->
+
+    </main>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2026 SEAGORI. All rights reserved.</p>
+  </footer>
+
+</body>
+</html>
